@@ -5,20 +5,27 @@
       <h2>My favourite movies</h2>
     </header>
     <div class="tabs">
-      <button :class="['btn', {'btn_green':movieStore.activeTab === 1}]">Favourite</button>
-      <button :class="['btn', {'btn_green':movieStore.activeTab === 2}]">Search</button>
+      <button :class="['btn', { btn_green: movieStore.activeTab === 1 }]">
+        Favourite
+      </button>
+      <button :class="['btn', { btn_green: movieStore.activeTab === 2 }]">
+        Search
+      </button>
     </div>
     <div class="movies" v-if="movieStore.activeTab === 1">
-      <h3>All Movies:</h3>
-      <Movie
-        v-for="movie in movieStore.movies"
-        :movie="movie"
-        :key="movie.id"
-      />
+      <div class="movies-all">
+        <h3>All Movies:</h3>
+        <Movie
+          v-for="movie in movieStore.movies"
+          :movie="movie"
+          :key="movie.id"
+        />
+      </div>
+      <div class="movies-watched">
+        
+      </div>
     </div>
-    <div class="search" v-else>
-      Search
-    </div>
+    <div class="search" v-else>Search</div>
   </main>
 </template>
 

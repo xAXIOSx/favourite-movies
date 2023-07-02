@@ -25,8 +25,9 @@
 const props = defineProps({
   movie: {
     type: Object,
+    required: true,
     default: () => {},
-  },
+  }
 });
 </script>
 

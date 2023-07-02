@@ -1,17 +1,9 @@
 import { defineStore } from "pinia";
+import movieObj from '../types/MovieType'
 
 interface State {
   movies: movieObj[],
   activeTab: number
-}
-
-interface movieObj {
-  id: number,
-  original_title: string,
-  overview: string,
-  poster_path: string,
-  release_date: string,
-  isWatched: boolean
 }
 
 export const useMovieStore = defineStore("movieStore", {
