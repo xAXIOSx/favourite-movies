@@ -1,5 +1,5 @@
 <template>
-  <div class="movie">
+  <div :class="['movie', {isWached: movie.isWatched}]">
     <img
       :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`"
       :alt="movie.original_title"
@@ -11,17 +11,21 @@
       </div>
       <span class="movie-overview">{{ movie.overview }}</span>
       <div class="movie-buttons">
-        <button class="btn movie-buttons-watched">
+        <button @click="movieStore.watchToggle(movie.id)" class="btn movie-buttons-watched">
           <span v-if="!movie.isWatched">Watched</span>
           <span v-else>Unwatched</span>
         </button>
-        <button class="btn movie-buttons-delete">Delete</button>
+        <button class="btn movie-buttons-delete" @click="movieStore.deleteMovie(movie.id)">Delete</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useMovieStore } from '../stores/movieStore';
+
+const movieStore = useMovieStore()
+
 const props = defineProps({
   movie: {
     type: Object,
@@ -39,6 +43,12 @@ const props = defineProps({
   margin-bottom: 20px;
   border: 2px solid #efefef;
   padding: 10px;
+  box-shadow: #1eb4c3 0px 0px 15px;
+
+  &.isWached {
+    box-shadow: none;
+    background-color: rgb(237, 237, 237);
+  }
 
   &-accept {
     margin-right: 10px;

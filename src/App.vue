@@ -5,16 +5,16 @@
       <h2>My favourite movies</h2>
     </header>
     <div class="tabs">
-      <button :class="['btn', { btn_green: movieStore.activeTab === 1 }]">
+      <button @click="movieStore.tabToggle(1)" :class="['btn', { btn_green: movieStore.activeTab === 1 }]">
         Favourite
       </button>
-      <button :class="['btn', { btn_green: movieStore.activeTab === 2 }]">
+      <button @click="movieStore.tabToggle(2)" :class="['btn', { btn_green: movieStore.activeTab === 2 }]">
         Search
       </button>
     </div>
     <div class="movies" v-if="movieStore.activeTab === 1">
       <div class="movies-all">
-        <h3>All Movies:</h3>
+        <h3>All Movies:  ({{ movieStore.moviesCounts.all }})</h3>
         <Movie
           v-for="movie in movieStore.movies"
           :movie="movie"
@@ -22,7 +22,12 @@
         />
       </div>
       <div class="movies-watched">
-        
+        <h3>Watched Movies: ({{ movieStore.moviesCounts.watched }})</h3>
+        <Movie
+          v-for="movie in movieStore.watchedMovies"
+          :movie="movie"
+          :key="movie.id"
+        />
       </div>
     </div>
     <div class="search" v-else>Search</div>

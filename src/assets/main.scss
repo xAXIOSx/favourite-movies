@@ -11,6 +11,10 @@ main {
   margin: auto;
 }
 
+::-webkit-scrollbar{
+  width: 0px;
+}
+
 .btn {
   border: none;
   width: 100px;

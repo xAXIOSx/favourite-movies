@@ -5,6 +5,7 @@ interface State {
   movies: movieObj[],
   activeTab: number
 }
+type GetMovie = (id:number) => movieObj
 
 export const useMovieStore = defineStore("movieStore", {
   state: ():State => ({
@@ -30,4 +31,38 @@ export const useMovieStore = defineStore("movieStore", {
     ],
     activeTab: 1
   }),
+  getters: {
+    watchedMovies():movieObj[]{
+      return this.movies.filter((movie)=>{
+        return movie.isWatched
+      })
+    },
+    moviesCounts():{[key: string]:number}{
+      return {
+        'all': this.movies.length,
+        'watched': this.watchedMovies.length
+      }
+    },
+    getMovie(state):GetMovie {
+      return function(id:number):movieObj{
+        let movieIdx = state.movies.findIndex(movie => movie.id == id)
+        return state.movies[movieIdx]
+      }
+    },
+  },
+  actions: {
+    watchToggle(id: number){
+      let movie = this.getMovie(id)
+      let isWatched = movie.isWatched
+      movie.isWatched = !isWatched
+    },
+    tabToggle(tab: number){
+      this.activeTab = tab
+    },
+    deleteMovie(id: number){
+      let movieIdx = this.movies.findIndex(movie => movie.id == id)
+      this.movies.splice(movieIdx,1)
+      // let movieIdx = this.movies.findIndex((movie) => movie.id == id)
+    }
+  }
 });
