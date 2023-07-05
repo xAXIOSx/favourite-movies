@@ -1,5 +1,5 @@
 <template>
-  <div :class="['movie', {isWached: movie.isWatched}]">
+  <div class="movie" v-if="searchedMovie">
     <img
       :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`"
       :alt="movie.original_title"
@@ -11,27 +11,57 @@
       </div>
       <span class="movie-overview">{{ movie.overview }}</span>
       <div class="movie-buttons">
-        <button @click="movieStore.watchToggle(movie.id)" class="btn movie-buttons-watched">
+        <button
+          class="btn movie-buttons-add"
+          @click="movieStore.deleteMovie(movie.id)"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+  <div :class="['movie', { isWached: movie.isWatched }]" v-else>
+    <img
+      :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`"
+      :alt="movie.original_title"
+      class="movie-img"
+    />
+    <div>
+      <div class="movie-name">
+        {{ movie.original_title }} ({{ movie.release_date }})
+      </div>
+      <span class="movie-overview">{{ movie.overview }}</span>
+      <div class="movie-buttons">
+        <button
+          @click="movieStore.watchToggle(movie.id)"
+          class="btn movie-buttons-watched"
+        >
           <span v-if="!movie.isWatched">Watched</span>
           <span v-else>Unwatched</span>
         </button>
-        <button class="btn movie-buttons-delete" @click="movieStore.deleteMovie(movie.id)">Delete</button>
+        <button
+          class="btn movie-buttons-delete"
+          @click="movieStore.deleteMovie(movie.id)"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useMovieStore } from '../stores/movieStore';
+import { useMovieStore } from "../stores/movieStore";
 
-const movieStore = useMovieStore()
+const movieStore = useMovieStore();
 
 const props = defineProps({
   movie: {
     type: Object,
     required: true,
     default: () => {},
-  }
+  },
+  searchedMovie: Boolean
 });
 </script>
 
@@ -85,9 +115,15 @@ const props = defineProps({
         margin-left: 10px;
       }
     }
+
     &-delete {
       color: #fff;
       background: #ff2a2a;
+    }
+
+    &-add {
+      color: #fff;
+      background: rgb(25, 150, 3);
     }
   }
 }

@@ -30,12 +30,15 @@
         />
       </div>
     </div>
-    <div class="search" v-else>Search</div>
+    <div class="search" v-else>
+      <Search/>
+    </div>
   </main>
 </template>
 
 <script setup>
 import Movie from "./components/Movie.vue";
+import Search from "./components/Search.vue"
 import { useMovieStore } from "./stores/movieStore";
 const movieStore = useMovieStore();
 
