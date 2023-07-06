@@ -7,7 +7,15 @@
       v-model="searchMovie"
     />
   </form>
-  <Movie v-for="movie in searchStore.movies" :movie="movie" :searched-movie="true" :key="movie.id"/>
+  <Loader v-if="searchStore.isLoading" />
+  <h1 style="text-align: center;" v-else-if="!searchStore.movies.length">Find any movie you want. <br/> Type the name in input</h1>
+  <Movie
+    v-else
+    v-for="movie in searchStore.movies"
+    :movie="movie"
+    :searched-movie="true"
+    :key="movie.id"
+  />
 </template>
 
 <script setup>
@@ -15,12 +23,12 @@ import { useSearchStore } from "../stores/searchStore";
 import Movie from "../components/Movie.vue";
 import { ref, watch } from "vue";
 
-let searchStore = useSearchStore()
+let searchStore = useSearchStore();
 let searchMovie = ref("");
 
-watch(searchMovie,()=>{
-    searchStore.getMovies(searchMovie.value)
-})
+watch(searchMovie, () => {
+  searchStore.getMovies(searchMovie.value);
+});
 </script>
 
 <style lang="scss" scoped>

@@ -13,7 +13,7 @@
       <div class="movie-buttons">
         <button
           class="btn movie-buttons-add"
-          @click="movieStore.deleteMovie(movie.id)"
+          @click="searchStore.addMovie(movie.id)"
         >
           Add
         </button>
@@ -52,8 +52,11 @@
 
 <script setup>
 import { useMovieStore } from "../stores/movieStore";
+import { useSearchStore } from "../stores/searchStore";
 
 const movieStore = useMovieStore();
+const searchStore = useSearchStore();
+
 
 const props = defineProps({
   movie: {

@@ -59,6 +59,9 @@ export const useMovieStore = defineStore("movieStore", {
     tabToggle(tab: number){
       this.activeTab = tab
     },
+    addMovie(movie:movieObj){
+      this.movies.push(movie)
+    },
     deleteMovie(id: number){
       let movieIdx = this.movies.findIndex(movie => movie.id == id)
       this.movies.splice(movieIdx,1)
