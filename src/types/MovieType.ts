@@ -5,6 +5,7 @@ interface Movie {
   poster_path: string;
   release_date: string;
   isWatched: boolean;
+  isAdd: boolean;
 }
 
 export default Movie

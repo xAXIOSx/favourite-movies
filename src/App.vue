@@ -41,8 +41,6 @@ import Movie from "./components/Movie.vue";
 import Search from "./components/Search.vue"
 import { useMovieStore } from "./stores/movieStore";
 const movieStore = useMovieStore();
-
-console.log(movieStore);
 </script>
 
 <style scoped lang="scss">

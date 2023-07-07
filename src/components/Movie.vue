@@ -1,5 +1,5 @@
 <template>
-  <div class="movie" v-if="searchedMovie">
+  <div :class="['movie', { isNonAdd: !movie.isAdd }]" v-if="searchedMovie">
     <img
       :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`"
       :alt="movie.original_title"
@@ -77,6 +77,10 @@ const props = defineProps({
   border: 2px solid #efefef;
   padding: 10px;
   box-shadow: #1eb4c3 0px 0px 15px;
+
+  .isNonAdd {
+    box-shadow: green;
+  }
 
   &.isWached {
     box-shadow: none;

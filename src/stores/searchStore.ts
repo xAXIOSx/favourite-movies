@@ -1,11 +1,9 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useMovieStore } from "./movieStore";
-import movieObj from '../types/MovieType'
+import movieObj from "../types/MovieType";
 
-type GetMovie = (id:number) => movieObj
-
-const movieStore = useMovieStore();
+type GetMovie = (id: number) => movieObj;
 
 const url =
   "https:api.themoviedb.org/3/search/movie?api_key=d6dbc1c44a0c08f5c7c468222a0a168c&query=";
@@ -16,11 +14,10 @@ export const useSearchStore = defineStore("searchStore", {
     isLoading: false,
   }),
   getters: {
-    getMovie(state):GetMovie {
-        return function(id:number):movieObj{
-          let movieIdx = state.movies.findIndex(movie => movie.id == id)
-          return state.movies[movieIdx]
-        }
+    getMovie(state): GetMovie {
+      return function (id: number): movieObj {
+
+      };
     },
   },
   actions: {
@@ -33,9 +30,13 @@ export const useSearchStore = defineStore("searchStore", {
         });
       }, 1000);
     },
-    addMovie(id:number){
-        let movie = this.getMovie(id)
-        movieStore.addMovie(movie)
-    }
+    addMovie(id: number) {
+      const movieStore = useMovieStore();
+      let movieIdx = this.movies.findIndex((movie) => movie["id"] == id);
+      let movie = this.movies[movieIdx];
+      console.log(movie);
+      
+      movieStore.addMovie({ ...movie, isWatched: false });
+    },
   },
 });
