@@ -4,7 +4,7 @@ interface Movie {
   overview: string;
   poster_path: string;
   release_date: string;
-  isWatched: boolean;
+  isFavourite: boolean;
   isAdd: boolean;
 }
 

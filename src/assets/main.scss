@@ -15,6 +15,10 @@ main {
   width: 0px;  
 }
 
+h3 {
+  font-size: 23px
+}
+
 .btn {
   border: none;
   width: 100px;
@@ -24,11 +28,33 @@ main {
   border-radius: 10px;
   cursor: pointer;
   background: #efefef;
+  transition: 0.3s;
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
   }
   &_green {
     background: #1db33e;
     color: white;
   }
+}
+
+.gold-text {
+  background: radial-gradient(
+    ellipse farthest-corner at right bottom,
+    #fedb37 0%,
+    #fdb931 8%,
+    #9f7928 30%,
+    #8a6e2f 40%,
+    transparent 80%
+  ),
+  radial-gradient(
+    ellipse farthest-corner at left top,
+    #ffffff 0%,
+    #ffffac 8%,
+    #d1b464 25%,
+    #5d4a1f 62.5%,
+    #5d4a1f 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

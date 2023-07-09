@@ -12,7 +12,8 @@
     "bundler": "^0.8.0",
     "pinia": "^2.1.4",
     "sass": "^1.63.6",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-basic-alert": "^1.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

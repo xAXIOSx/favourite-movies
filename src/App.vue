@@ -6,7 +6,7 @@
     </header>
     <div class="tabs">
       <button @click="movieStore.tabToggle(1)" :class="['btn', { btn_green: movieStore.activeTab === 1 }]">
-        Favourite
+        My Movies
       </button>
       <button @click="movieStore.tabToggle(2)" :class="['btn', { btn_green: movieStore.activeTab === 2 }]">
         Search
@@ -14,21 +14,21 @@
     </div>
     <div class="movies" v-if="movieStore.activeTab === 1">
       <div class="movies-all">
-        <h3>All Movies:  ({{ movieStore.moviesCounts.all }})</h3>
+        <h3>Watched Movies:  ({{ movieStore.moviesCounts.all }})</h3>
         <Movie
           v-for="movie in movieStore.movies"
           :movie="movie"
           :key="movie.id"
         />
       </div>
-      <div class="movies-watched">
-        <h3>Watched Movies: ({{ movieStore.moviesCounts.watched }})</h3>
+      <TransitionGroup class="movies-watched" name="fav-list" tag="div">
+        <h3><span class="gold-text">Favourite</span> Movies: ({{ movieStore.moviesCounts.favourite }})</h3>
         <Movie
-          v-for="movie in movieStore.watchedMovies"
+          v-for="movie in movieStore.favouriteMovies"
           :movie="movie"
           :key="movie.id"
         />
-      </div>
+      </TransitionGroup>
     </div>
     <div class="search" v-else>
       <Search/>
@@ -59,5 +59,15 @@ const movieStore = useMovieStore();
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
+}
+
+.fav-list-enter-active,
+.fav-list-leave-active {
+  transition: all 0.5s ease;
+}
+.fav-list-enter-from,
+.fav-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

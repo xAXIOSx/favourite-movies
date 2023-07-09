@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import movieObj from '../types/MovieType'
+import { computed, ref } from "vue";
 
 interface State {
   movies: movieObj[],
@@ -7,67 +8,101 @@ interface State {
 }
 type GetMovie = (id:number) => movieObj
 
-export const useMovieStore = defineStore("movieStore", {
-  state: ():State => ({
-    movies: [
-      // {
-      //   id: 1,
-      //   original_title: "Spider-Man",
-      //   overview:
-      //     "After being bitten by a genetically altered spider at Oscorp, nerdy but endearing high school student Peter Parker is endowed with amazing powers to become the superhero known as Spider-Man.",
-      //   poster_path: "/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg",
-      //   release_date: "2002-05-01",
-      //   isWatched: true,
-      // },
-      // {
-      //   id: 2,
-      //   original_title: "The Batman",
-      //   overview:
-      //     "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.",
-      //   poster_path: "/b0PlSFdDwbyK0cf5RxwDpaOJQvQ.jpg",
-      //   release_date: "2022-03-01",
-      //   isWatched: false,
-      // },
-    ],
-    activeTab: 2
-  }),
-  getters: {
-    watchedMovies():movieObj[]{
-      return this.movies.filter((movie)=>{
-        return movie.isWatched
-      })
-    },
-    moviesCounts():{[key: string]:number}{
-      return {
-        'all': this.movies.length,
-        'watched': this.watchedMovies.length
-      }
-    },
-    getMovie(state):GetMovie {
-      return function(id:number):movieObj{
-        let movieIdx = state.movies.findIndex(movie => movie.id == id)
-        return state.movies[movieIdx]
-      }
-    },
-  },
-  actions: {
-    watchToggle(id: number){
-      let movie = this.getMovie(id)
-      let isWatched = movie.isWatched
+// export const useMovieStore = defineStore("movieStore", {
+//   state: ():State => ({
+//     movies: [],
+//     activeTab: 2
+//   }),
+//   getters: {
+//     favouriteMovies():movieObj[]{
+//       return this.movies.filter((movie)=>{
+//         return movie.isFavourite
+//       })
+//     },
+//     moviesCounts():{[key: string]:number}{
+//       return {
+//         'all': this.movies.length,
+//         'favourite': this.favouriteMovies.length
+//       }
+//     },
+//     getMovie(state):GetMovie {
+//       return function(id:number):movieObj{
+//         let movieIdx = state.movies.findIndex(movie => movie.id == id)
+//         return state.movies[movieIdx]
+//       }
+//     },
+//   },
+//   actions: {
+//     favouriteToggle(id: number){
+//       let movie = this.getMovie(id)
+//       let isFavourite = movie.isFavourite
+//       console.log(movie);
+//       movie.isFavourite = !isFavourite
+//     },
+//     tabToggle(tab: number){
+//       this.activeTab = tab
+//     },
+//     addMovie(movie:movieObj){
+//       this.movies.push(movie)
+//     },
+//     deleteMovie(id: number){
+//       let movieIdx = this.movies.findIndex(movie => movie.id == id)
+//       this.movies.splice(movieIdx,1)
+//       // let movieIdx = this.movies.findIndex((movie) => movie.id == id)
+//     }
+//   }
+// });
+
+export const useMovieStore = defineStore("movieStore", () => {
+  let movies = ref([])
+  let activeTab = ref(2)
+
+  const favouriteMovies:movieObj[] = computed(()=>{
+    return movies.value.filter((movie:movieObj)=>{
+      return movie.isFavourite
+    })
+  })
+
+  const moviesCounts = computed(()=>{():{[key: string]:number} => {
+          return {
+            'all': movies.value.length,
+            'favourite': favouriteMovies.length
+          }
+        }})
+        const getMovie = (state):GetMovie => {
+          return function(id:number):movieObj{
+            let movieIdx = state.movies.findIndex(movie => movie.id == id)
+            return state.movies[movieIdx]
+          }
+        }
+  
+  const favouriteToggle = (id: number) => {
+      let movie = getMovie(id)
+      let isFavourite = movie.isFavourite
       console.log(movie);
-      movie.isWatched = !isWatched
-    },
-    tabToggle(tab: number){
-      this.activeTab = tab
-    },
-    addMovie(movie:movieObj){
-      this.movies.push(movie)
-      console.log(movie);
-    },
-    deleteMovie(id: number){
-      let movieIdx = this.movies.findIndex(movie => movie.id == id)
-      this.movies.splice(movieIdx,1)
-      // let movieIdx = this.movies.findIndex((movie) => movie.id == id)
+      movie.isFavourite = !isFavourite
+  }
+    const tabToggle = (tab: number) => {
+      activeTab.value = tab
+    }
+    const addMovie = (movie:movieObj) => {
+      movies.value.push(movie)
+    }
+    const deleteMovie = (id: number) => {
+      let movieIdx = movies.value.findIndex(movie => movie.id == id)
+      movies.value.splice(movieIdx,1)
+    }
+    return {
+      movies,
+      activeTab,
+      favouriteMovies,
+      moviesCounts,
+      getMovie,
+      favouriteToggle,
+      tabToggle,
+      addMovie,
+      deleteMovie,
     }
   }
+
 });
