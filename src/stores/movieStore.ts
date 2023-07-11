@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 import movieObj from "../types/MovieType";
 import { computed, ref } from "vue";
+import { watch } from "vue";
 
 
 export const useMovieStore = defineStore("movieStore", () => {
-  let movies = ref<movieObj[]>([]);
-  let activeTab = ref(2);
+  let movies = ref<movieObj[]>(JSON.parse(localStorage.getItem("movies") || '[]'));
+  let activeTab = ref(1);
+
+  watch(movies,()=>{
+    localStorage.setItem("movies", JSON.stringify(movies.value))
+  }, {deep: true})
 
   const favouriteMovies = computed((): movieObj[] => {
     return movies.value.filter((movie: movieObj) => {

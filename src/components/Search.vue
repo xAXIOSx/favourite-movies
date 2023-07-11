@@ -36,10 +36,12 @@ function showError(){
 }
 
 let searchStore = useSearchStore();
-let searchMovie = ref("");
+let searchMovie = ref(localStorage.getItem('searchQuery'));
 
 watch(searchMovie, () => {
   searchStore.getMovies(searchMovie.value);
+  console.log(searchMovie.value);
+  localStorage.setItem('searchQuery', searchMovie.value)
 });
 
 </script>

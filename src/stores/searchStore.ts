@@ -4,12 +4,11 @@ import { useMovieStore } from "./movieStore";
 import movieObj from "../types/MovieType";
 import { ref } from "vue";
 
-
-
 export const useSearchStore = defineStore("searchStore", () => {
   const movies = ref<movieObj[]>([]);
   const isLoading = ref(false);
-  const url = "https:api.themoviedb.org/3/search/movie?api_key=d6dbc1c44a0c08f5c7c468222a0a168c&query=";
+  const url =
+    "https:api.themoviedb.org/3/search/movie?api_key=d6dbc1c44a0c08f5c7c468222a0a168c&query=";
 
   const getMovies = (search: string) => {
     isLoading.value = true;
